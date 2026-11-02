@@ -25,7 +25,10 @@ input{width:100%;padding:14px;margin:10px 0;background:#0a0a0a;border:1px solid 
 </div>
 
 <div id="adminBox" class="admin">
+<div style="display:flex;justify-content:space-between;align-items:center">
 <h2>مرحبا يا بطل! 👋 <span style="color:#d4af37">VALUEX</span></h2>
+<button onclick="doLogout()" style="background:#222;color:#fff;border:1px solid #333;padding:8px 15px;border-radius:20px;cursor:pointer">خروج</button>
+</div>
 <p style="color:#888;margin:10px 0">من هون بتضيف منتجات جديدة</p>
 
 <div class="card">
@@ -55,18 +58,23 @@ input{width:100%;padding:14px;margin:10px 0;background:#0a0a0a;border:1px solid 
 function doLogin(){
  let p=document.getElementById('pass').value;
  if(p==='valuex2026'){
-  localStorage.setItem('vx_auth','1');
+  sessionStorage.setItem('vx_auth','1');
   show();
  }else{
   alert('الباسورد غلط!');
  }
+}
+function doLogout(){
+ sessionStorage.removeItem('vx_auth');
+ localStorage.removeItem('vx_auth');
+ location.reload();
 }
 function show(){
  document.getElementById('loginBox').style.display='none';
  document.getElementById('adminBox').style.display='block';
  load();
 }
-if(localStorage.getItem('vx_auth')==='1'){show();}
+if(sessionStorage.getItem('vx_auth')==='1'){show();}
 let defaults=[
  {title:'جنيه فلسطيني ذهبي 1922',price:'2850',emoji:'🪙',cat:'عملات'},
  {title:'ياقوت احمر ملكي 5.2 قيراط',price:'4200',emoji:'💎',cat:'احجار'},
