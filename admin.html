@@ -7,10 +7,10 @@
 <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700;900&display=swap" rel="stylesheet">
 <style>
 *{margin:0;padding:0;box-sizing:border-box;font-family:'Tajawal',sans-serif}
-body{background:#0a0a0a;color:#fff}
+body{background:#0a0a0a;color:#fff;min-height:100vh}
 .login{max-width:380px;margin:80px auto;padding:30px;background:#151515;border:1px solid #222;border-radius:20px;text-align:center}
-input{width:100%;padding:14px;margin:10px 0;background:#0a0a0a;border:1px solid #333;border-radius:12px;color:#fff}
-.btn{background:#d4af37;color:#000;padding:14px;border:none;border-radius:50px;font-weight:900;width:100%;cursor:pointer;margin-top:10px}
+input{width:100%;padding:14px;margin:10px 0;background:#0a0a0a;border:1px solid #333;border-radius:12px;color:#fff;font-size:15px}
+.btn{background:#d4af37;color:#000;padding:14px;border:none;border-radius:50px;font-weight:900;width:100%;cursor:pointer;margin-top:10px;font-size:15px}
 .admin{display:none;max-width:800px;margin:0 auto;padding:20px}
 .card{background:#151515;border:1px solid #222;border-radius:16px;padding:20px;margin:15px 0}
 .prod{display:flex;justify-content:space-between;align-items:center;background:#0f0f0f;border:1px solid #222;padding:12px;border-radius:10px;margin:8px 0}
@@ -19,10 +19,9 @@ input{width:100%;padding:14px;margin:10px 0;background:#0a0a0a;border:1px solid 
 <body>
 <div id="loginBox" class="login">
 <h2>VALUEX <span style="color:#d4af37">ADMIN</span></h2>
-<p style="color:#888;margin:15px 0">اكتب الباسورد</p>
-<input type="password" id="pass" placeholder="valuex2026">
+<p style="color:#888;margin:15px 0">لوحة التحكم - دخول آمن</p>
+<input type="password" id="pass" placeholder="••••••••">
 <button class="btn" onclick="doLogin()">دخول</button>
-<p style="color:#555;font-size:12px;margin-top:10px">الباسورد: valuex2026</p>
 </div>
 
 <div id="adminBox" class="admin">
@@ -33,7 +32,7 @@ input{width:100%;padding:14px;margin:10px 0;background:#0a0a0a;border:1px solid 
 <h3>➕ اضافة منتج</h3>
 <input id="title" placeholder="اسم المنتج - مثال: جنيه ذهبي">
 <input id="price" placeholder="السعر - مثال: 2850">
-<input id="emoji" placeholder="ايموجي 🪙 او رابط صورة">
+<input id="emoji" placeholder="رابط الصورة او ايموجي 🪙">
 <input id="cat" placeholder="القسم - مثال: عملات">
 <button class="btn" onclick="addProd()">اضافة ✅</button>
 </div>
@@ -47,7 +46,7 @@ input{width:100%;padding:14px;margin:10px 0;background:#0a0a0a;border:1px solid 
 
 <div class="card">
 <h3>⚙️ رقم الواتساب</h3>
-<input id="wa" placeholder="970599000000">
+<input id="wa" placeholder="970599XXXXXX">
 <button class="btn" style="background:#222;color:#d4af37;border:1px solid #d4af37" onclick="saveWa()">حفظ رقم الواتساب</button>
 </div>
 </div>
@@ -59,7 +58,7 @@ function doLogin(){
   localStorage.setItem('vx_auth','1');
   show();
  }else{
-  alert('الباسورد غلط! اكتب: valuex2026');
+  alert('الباسورد غلط!');
  }
 }
 function show(){
@@ -68,7 +67,6 @@ function show(){
  load();
 }
 if(localStorage.getItem('vx_auth')==='1'){show();}
-
 let defaults=[
  {title:'جنيه فلسطيني ذهبي 1922',price:'2850',emoji:'🪙',cat:'عملات'},
  {title:'ياقوت احمر ملكي 5.2 قيراط',price:'4200',emoji:'💎',cat:'احجار'},
@@ -77,10 +75,8 @@ let defaults=[
  {title:'ليرة عثمانية ذهبية',price:'1950',emoji:'👑',cat:'عملات'},
  {title:'الماس اصفر طبيعي',price:'8900',emoji:'🔶',cat:'احجار'}
 ];
-
 let products=JSON.parse(localStorage.getItem('vx_products')||'null');
 if(!products){products=defaults; localStorage.setItem('vx_products',JSON.stringify(products));}
-
 function load(){
  document.getElementById('count').innerText=products.length;
  let h='';
@@ -101,25 +97,10 @@ function addProd(){
  localStorage.setItem('vx_products',JSON.stringify(products));
  document.getElementById('title').value=''; document.getElementById('price').value=''; document.getElementById('emoji').value='';
  load();
- alert('تمت الاضافة! افتح المتجر وشوفه');
 }
-function delProd(i){
- products.splice(i,1);
- localStorage.setItem('vx_products',JSON.stringify(products));
- load();
-}
-function resetAll(){
- if(confirm('ترجع الـ 6 منتجات الاصلية؟')){
-  products=defaults;
-  localStorage.setItem('vx_products',JSON.stringify(products));
-  load();
- }
-}
-function saveWa(){
- let w=document.getElementById('wa').value;
- localStorage.setItem('vx_wa',w);
- alert('تم حفظ الواتساب: '+w);
-}
+function delProd(i){products.splice(i,1);localStorage.setItem('vx_products',JSON.stringify(products));load();}
+function resetAll(){if(confirm('ترجع الـ 6 منتجات الاصلية؟')){products=defaults;localStorage.setItem('vx_products',JSON.stringify(products));load();}}
+function saveWa(){let w=document.getElementById('wa').value;localStorage.setItem('vx_wa',w);alert('تم حفظ الواتساب: '+w);}
 </script>
 </body>
 </html>
